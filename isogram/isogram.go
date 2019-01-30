@@ -1,5 +1,10 @@
 package isogram
 
+import (
+	"strings"
+	"unicode"
+)
+
 // PSEUDO BRAINSTORM:
 // iterate through letters in word
 // append to array
@@ -9,7 +14,17 @@ package isogram
 // BAT
 func IsIsogram(a string) bool {
 	// hash table method
-	empty_dict := make(map[string]intg)
+	empty_dict := make(map[string]int)
+	for i := 0; i < len(a); i++ {
+		if unicode.IsLetter(rune(a[i])) {
+			empty_dict[strings.ToUpper(string(a[i]))]++
+			if empty_dict[strings.ToUpper(string(a[i]))] > 1 {
+				return false
+			}
+		}
+	}
+	return true
+	// d["key"] += 1
 
 	// var emptySlice = []string{}
 	// // m := make(map[string]int)
