@@ -13,6 +13,7 @@ func Valid(num string) bool {
 		// var total = 0
 		if i%2 == 0 {
 			// Int(num[i]) *= 2
+			// STUCK converting below line to an int. num string to int
 			strconv.Atoi(string(num[i])) *= 2
 			if num[i] > 9 {
 				num[i] -= 9

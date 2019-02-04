@@ -18,8 +18,10 @@ func SumMultiples(limit int, divisors []int) int {
 	for i := 0; i < limit; i++ {
 		for _, v := range divisors {
 			if i%v == 0 {
+				// STUCK. Should check if temp_slice contains number currently being used in divisors aka divisors[i]
 				if temp_slice(divisors[i]) < 1 {
 					// append to slice
+					// STUCK. Is this how you append to a make slice?
 					temp_slice = append(temp_slice, i)
 					sum += i
 					fmt.Println("number:", i)
