@@ -13,14 +13,20 @@ import "fmt"
 
 func SumMultiples(limit int, divisors []int) int {
 	var sum = 0
+	// temporary slice
+	temp_slice := make(map[int]int)
 	for i := 0; i < limit; i++ {
 		for _, v := range divisors {
 			if i%v == 0 {
-				sum += i
-				fmt.Println("number:", i)
-				fmt.Println("divisible by:", v)
-				fmt.Println("sum:", sum)
-				fmt.Println("")
+				if temp_slice(divisors[i]) < 1 {
+					// append to slice
+					temp_slice = append(temp_slice, i)
+					sum += i
+					fmt.Println("number:", i)
+					fmt.Println("divisible by:", v)
+					fmt.Println("sum:", sum)
+					fmt.Println("")
+				}
 			}
 		}
 	}
