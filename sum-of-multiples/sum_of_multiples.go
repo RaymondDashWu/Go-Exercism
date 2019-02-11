@@ -14,15 +14,22 @@ import "fmt"
 func SumMultiples(limit int, divisors []int) int {
 	var sum = 0
 	// temporary slice
-	temp_slice := make(map[int]int)
+	temp_map := make(map[int]int)
 	for i := 0; i < limit; i++ {
 		for _, v := range divisors {
 			if i%v == 0 {
+				if _, ok := temp_map[divisors[i]]; ok {
+					temp_map[divisors[i]]++
+				} else {
+					temp_map[divisors[i]] = 1
+				}
+
 				// STUCK. Should check if temp_slice contains number currently being used in divisors aka divisors[i]
-				if temp_slice(divisors[i]) < 1 {
+				if temp_map[divisors[i]] < 1 {
 					// append to slice
 					// STUCK. Is this how you append to a make slice?
-					temp_slice = append(temp_slice, i)
+					temp_map[i]++
+					// temp_map = append(temp_map, i)
 					sum += i
 					fmt.Println("number:", i)
 					fmt.Println("divisible by:", v)
