@@ -1,6 +1,7 @@
 package luhn
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -22,20 +23,43 @@ import (
 func Valid(num string) bool {
 	// fmt.Println("Tested against num:", num)
 	var total = 0
+
 	// strip spaces
 	num = strings.Replace(num, " ", "", -1)
 
+	// edge case if length of num is one digit
 	if len(num) <= 1 {
 		return false
 	}
 
-	for i, j := 0, len(num)-1; i < j; i, j = i+1, j-1 {
-		if j % 2 == 0 {
-			
+	// converting num (string) to numbers (int)
+
+	var numbers = []int{}
+	for _, v := range num {
+		i, err := strconv.Atoi(string(v))
+		if err != nil {
+			return false
+		}
+		numbers = append(numbers, int(i))
+	}
+
+	// Adding numbers together
+	for i, j := 1, len(numbers)-1; j >= 0; i, j = i+1, j-1 {
+		var tempTotal = 0
+		if i%2 == 0 {
+			tempTotal += numbers[j] * 2
+			if tempTotal > 9 {
+				tempTotal -= 9
+			}
+			total += tempTotal
+		} else {
+			total += numbers[j]
 		}
 	}
-	return string(empty_string)
-
+	if total%10 == 0 {
+		return true
+	}
+	return false
 }
 
 // 	// if even number, counter starts at 0. If odd, counter starts at 1. This possibly accounts for starting from right?
