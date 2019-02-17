@@ -10,7 +10,7 @@ package space
 // Uranus: orbital period 84.016846 Earth years
 // Neptune: orbital period 164.79132 Earth years
 
-type Planet string
+type Planet = string
 
 var earthSecondsToYear = 31557600.0
 var planetSecondsMultiplier = map[Planet]float64{
