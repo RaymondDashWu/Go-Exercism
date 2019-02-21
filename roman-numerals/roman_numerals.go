@@ -13,11 +13,31 @@ package romannumerals
 // add all results to empty roman numeral holder
 
 func ToRomanNumeral(num int) (string, bool) {
-	
-	var {}
-	rom_numeral_holder = ""
+	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
+	var romanNumeralDict map[int]string = map[int]string{
+		1000: "M",
+		900:  "CM",
+		500:  "D",
+		400:  "CD",
+		100:  "C",
+		90:   "XC",
+		50:   "L",
+		40:   "XL",
+		10:   "X",
+		9:    "IX",
+		5:    "V",
+		4:    "IV",
+		1:    "I",
+	}
+	var romNumeralHolder = ""
 	if num == 0 {
 		return "", false
 	}
-
+	for k, v := range romanNumeralDict {
+		if num >= k {
+			romNumeralHolder += v
+			num -= k
+		}
+	}
+	return romNumeralHolder, false
 }
