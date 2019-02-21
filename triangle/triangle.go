@@ -12,31 +12,36 @@
 
 package triangle
 
+import "math"
+
 // Notice KindFromSides() returns this type. Pick a suitable data type.
-type Kind string
+type Kind int
 
 const (
 	// Pick values for the following identifiers used by the test program.
-	NaT = iota // not a triangle
-	Equ        // equilateral
-	Iso        // isosceles
-	Sca        // scalene
+	NaT Kind = iota // not a triangle
+	Equ             // equilateral
+	Iso             // isosceles
+	Sca             // scalene
 )
 
 // KindFromSides should have a comment documenting it.
 func KindFromSides(a, b, c float64) Kind {
-	if a == 0 || b == 0 || c == 0 {
-		return "NaT"
+	if a <= 0 || b <= 0 || c <= 0 || (a+b < c) || (a+c < b) || (c+b < a) || math.IsInf(a, 0) || math.IsInf(b, 0) || math.IsInf(c, 0) {
+		return Kind(NaT)
 	}
 	if a+b >= c {
 		if a == b && b == c && a == c {
-			return "Equ"
+			return Kind(Equ)
 		}
-		if a == b || a == c {
-			return "Iso"
+		if a == b || b == c || a == c {
+			return Kind(Iso)
+		}
+		if a != b && a != c {
+			return Kind(Sca)
 		}
 	}
-	return "Sca"
+	return Kind(NaT)
 	// Write some code here to pass the test suite.
 	// Then remove all the stock comments.
 	// They're here to help you get started but they only clutter a finished solution.
@@ -44,3 +49,5 @@ func KindFromSides(a, b, c float64) Kind {
 	// var k Kind
 	// return k
 }
+
+// (a == b && a == c) || (b == c && b == a) || (c == a && c == b) || (b == c && c == b) || (a == c && c == a)
