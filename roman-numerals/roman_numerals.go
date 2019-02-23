@@ -1,5 +1,11 @@
 package romannumerals
 
+import (
+	"errors"
+	"fmt"
+	"sort"
+)
+
 // Pseudo brainstorm
 // Symbol	I	V	X	L	C	D	M
 // Value	1	5	10	50	100	500	1,000
@@ -12,7 +18,21 @@ package romannumerals
 // if it is then subtract that amount up to 3 times. Otherwise move on to next roman numeral
 // add all results to empty roman numeral holder
 
-func ToRomanNumeral(num int) (string, bool) {
+func reverseSortedKeys(m map[int]string) []int {
+	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
+	// https://stackoverflow.com/questions/18343208/how-do-i-reverse-sort-a-slice-of-integer-go
+	keys := make([]int, len(m))
+	for k, _ := range m {
+		keys = append(keys, k)
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+	for _, k := range keys {
+		fmt.Println(k, romanNumeralDict[k])
+	}
+	return keys
+}
+
+func ToRomanNumeral(num int) (string, error) {
 	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
 	var romanNumeralDict map[int]string = map[int]string{
 		1000: "M",
@@ -30,14 +50,14 @@ func ToRomanNumeral(num int) (string, bool) {
 		1:    "I",
 	}
 	var romNumeralHolder = ""
-	if num == 0 {
-		return "", false
+	if num <= 0 {
+		return "", errors.New("Not able to be converted to Roman numeral")
 	}
-	for k, v := range romanNumeralDict {
-		if num >= k {
+	for k, v := range reverseSortedKeys(romanNumeralDict) {
+		for num >= k {
 			romNumeralHolder += v
 			num -= k
 		}
 	}
-	return romNumeralHolder, false
+	return romNumeralHolder, nil
 }
