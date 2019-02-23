@@ -27,10 +27,37 @@ func reverseSortedKeys(m map[int]string) []int {
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
 	for _, k := range keys {
-		fmt.Println(k, romanNumeralDict[k])
+		fmt.Println(k, m[k])
 	}
 	return keys
 }
+
+// Method 1
+// func sortedKeys(m map[int]string) []int {
+// 	keys := make([]int, len(m))
+// 	for k, _ := range m {
+// 		keys = append(keys, k)
+// 	}
+// 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+// 	for _, k := range keys {
+// 		fmt.Sprintf(k, m[k])
+// 	}
+// 	return keys
+// }
+
+// Method 2
+// func reverseSortedKeys(m map[int]string) ([]int, []string) {
+// 	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
+// 	// https://stackoverflow.com/questions/18343208/how-do-i-reverse-sort-a-slice-of-integer-go
+// 	keys := make([]int, len(m))
+// 	i := 0
+// 	for k := range m {
+// 		keys[i] = k
+// 		i++
+// 	}
+// 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+// 	return keys, m[keys]
+// }
 
 func ToRomanNumeral(num int) (string, error) {
 	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
