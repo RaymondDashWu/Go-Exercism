@@ -2,7 +2,6 @@ package romannumerals
 
 import (
 	"errors"
-	"fmt"
 	"sort"
 )
 
@@ -21,14 +20,11 @@ import (
 func reverseSortedKeys(m map[int]string) []int {
 	// https://stackoverflow.com/questions/18342784/how-to-iterate-through-a-map-in-golang-in-order
 	// https://stackoverflow.com/questions/18343208/how-do-i-reverse-sort-a-slice-of-integer-go
-	keys := make([]int, len(m))
-	for k, _ := range m {
+	keys := []int{}
+	for k := range m {
 		keys = append(keys, k)
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
-	for _, k := range keys {
-		fmt.Println(k, m[k])
-	}
 	return keys
 }
 
@@ -77,12 +73,14 @@ func ToRomanNumeral(num int) (string, error) {
 		1:    "I",
 	}
 	var romNumeralHolder = ""
-	if num <= 0 {
+	if num <= 0 || num > 3000 {
 		return "", errors.New("Not able to be converted to Roman numeral")
 	}
-	for k, v := range reverseSortedKeys(romanNumeralDict) {
+
+	for _, k := range reverseSortedKeys(romanNumeralDict) {
 		for num >= k {
-			romNumeralHolder += v
+			// TODO: Can't have same letter more than 3 times
+			romNumeralHolder += romanNumeralDict[k]
 			num -= k
 		}
 	}
